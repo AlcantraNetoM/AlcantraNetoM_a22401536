@@ -1,0 +1,24 @@
+{% extends "portfolio/base.html" %}
+
+{% block content %}
+<h2>Making Of</h2>
+
+<section>
+    {% for entrada in entradas %}
+    <article>
+        <header>
+            <h3>{{ entrada.titulo }}</h3>
+            <p>{{ entrada.data }} | Commit {{ entrada.commit_hash }} | Iteração {{ entrada.iteracao }}</p>
+        </header>
+        <section>
+            <p>{{ entrada.descricao }}</p>
+            {% if entrada.alteracoes %}<p><strong>Alterações:</strong> {{ entrada.alteracoes }}</p>{% endif %}
+            {% if entrada.dificuldades %}<p><strong>Dificuldades:</strong> {{ entrada.dificuldades }}</p>{% endif %}
+            {% if entrada.resultado %}<p><strong>Resultado:</strong> {{ entrada.resultado }}</p>{% endif %}
+        </section>
+    </article>
+    {% empty %}
+        <p>Sem entradas de making-of registadas.</p>
+    {% endfor %}
+</section>
+{% endblock %}

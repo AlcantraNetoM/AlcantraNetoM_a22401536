@@ -1,0 +1,23 @@
+{% extends "portfolio/base.html" %}
+
+{% block content %}
+<h2>Tecnologias</h2>
+<p><a href="{% url 'portfolio-tecnologia-nova' %}">Nova tecnologia</a></p>
+
+<section>
+    {% for tecnologia in tecnologias %}
+    <article>
+        <header>
+            <h3>{{ tecnologia.nome }}</h3>
+            <p>{{ tecnologia.tipo.nome }}</p>
+        </header>
+        <section>
+            <p>{{ tecnologia.descricao }}</p>
+            <p><a href="{% url 'portfolio-tecnologia-editar' tecnologia.pk %}">Editar</a> | <a href="{% url 'portfolio-tecnologia-apagar' tecnologia.pk %}">Apagar</a></p>
+        </section>
+    </article>
+    {% empty %}
+        <p>Sem tecnologias registadas.</p>
+    {% endfor %}
+</section>
+{% endblock %}

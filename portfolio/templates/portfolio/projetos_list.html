@@ -1,0 +1,23 @@
+{% extends "portfolio/base.html" %}
+
+{% block content %}
+<h2>Projetos</h2>
+<p><a href="{% url 'portfolio-projeto-novo' %}">Novo projeto</a></p>
+
+<section>
+    {% for projeto in projetos %}
+    <article>
+        <header>
+            <h3>{{ projeto.titulo }}</h3>
+            <p>{{ projeto.resumo }}</p>
+        </header>
+        <section>
+            <p>{{ projeto.descricao }}</p>
+            <p><a href="{% url 'portfolio-projeto-editar' projeto.pk %}">Editar</a> | <a href="{% url 'portfolio-projeto-apagar' projeto.pk %}">Apagar</a></p>
+        </section>
+    </article>
+    {% empty %}
+        <p>Sem projetos registados.</p>
+    {% endfor %}
+</section>
+{% endblock %}

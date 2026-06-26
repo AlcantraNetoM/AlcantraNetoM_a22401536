@@ -73,3 +73,91 @@ class UnidadeCurricular(models.Model):
 
 	def __str__(self):
 		return f"{self.codigo_legivel} - {self.nome}"
+
+
+class TipoTecnologia(models.Model):
+	nome = models.CharField(max_length=100, unique=True)
+	descricao = models.TextField(blank=True)
+
+	class Meta:
+		ordering = ("nome",)
+
+	def __str__(self):
+		return self.nome
+
+
+class Tecnologia(models.Model):
+	nome = models.CharField(max_length=120)
+	tipo = models.ForeignKey(TipoTecnologia, related_name="tecnologias", on_delete=models.PROTECT)
+	descricao = models.TextField(blank=True)
+	vantagens = models.TextField(blank=True)
+	desvantagens = models.TextField(blank=True)
+	url = models.URLField(blank=True)
+
+	class Meta:
+		ordering = ("tipo", "nome")
+
+	def __str__(self):
+		return self.nome
+
+
+class Competencia(models.Model):
+	nome = models.CharField(max_length=120)
+	descricao = models.TextField(blank=True)
+
+	class Meta:
+		ordering = ("nome",)
+
+	def __str__(self):
+		return self.nome
+
+
+class Formacao(models.Model):
+	nome = models.CharField(max_length=160)
+	instituicao = models.CharField(max_length=160)
+	descricao = models.TextField(blank=True)
+	ano_inicio = models.PositiveSmallIntegerField(null=True, blank=True)
+	ano_fim = models.PositiveSmallIntegerField(null=True, blank=True)
+	url = models.URLField(blank=True)
+
+	class Meta:
+		ordering = ("-ano_inicio", "nome")
+
+	def __str__(self):
+		return self.nome
+
+
+class Projeto(models.Model):
+	titulo = models.CharField(max_length=160)
+	resumo = models.CharField(max_length=255, blank=True)
+	descricao = models.TextField(blank=True)
+	imagem = models.ImageField(upload_to="portfolio/projetos/", blank=True, null=True)
+	github_url = models.URLField(blank=True)
+	demo_url = models.URLField(blank=True)
+	tecnologias = models.ManyToManyField(Tecnologia, related_name="projetos", blank=True)
+	competencias = models.ManyToManyField(Competencia, related_name="projetos", blank=True)
+	formacoes = models.ManyToManyField(Formacao, related_name="projetos", blank=True)
+	data_criacao = models.DateField(auto_now_add=True)
+
+	class Meta:
+		ordering = ("-data_criacao", "titulo")
+
+	def __str__(self):
+		return self.titulo
+
+
+class MakingOfEntrada(models.Model):
+	data = models.DateField()
+	commit_hash = models.CharField(max_length=40)
+	iteracao = models.PositiveIntegerField()
+	titulo = models.CharField(max_length=160)
+	descricao = models.TextField()
+	alteracoes = models.TextField(blank=True)
+	dificuldades = models.TextField(blank=True)
+	resultado = models.TextField(blank=True)
+
+	class Meta:
+		ordering = ("-data", "-iteracao")
+
+	def __str__(self):
+		return f"{self.data} - {self.titulo}"

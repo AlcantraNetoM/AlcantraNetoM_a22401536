@@ -1,0 +1,80 @@
+{% extends "portfolio/base.html" %}
+
+{% block content %}
+<h2>Sobre esta Aplicação</h2>
+
+<section>
+    <article>
+        <header>
+            <h3>Arquitetura MVT</h3>
+        </header>
+        <p>Django organiza a aplicação em Model, View e Template. O Model guarda os dados, a View recolhe e prepara a informação, e o Template apresenta o resultado no browser.</p>
+        <p>Fluxo principal: pedido HTTP, view, ORM para a base de dados, template e resposta HTML.</p>
+        <iframe width="100%" height="315" src="https://www.youtube.com/embed/zkaXaIpEdqA" title="Vídeo sobre formulário" allowfullscreen></iframe>
+    </article>
+
+    <article>
+        <header>
+            <h3>Modelação</h3>
+        </header>
+        <p>A modelação do portfolio inclui cursos, unidades curriculares, projetos, tecnologias, competências, formações e registos de making-of.</p>
+        <p>Os diagramas DER e as fotografias de apoio devem ser adicionados nesta secção quando estiverem prontos.</p>
+    </article>
+
+    <article>
+        <header>
+            <h3>Tecnologias</h3>
+        </header>
+        <p>Ferramentas usadas: Django, HTML, CSS, Git, GitHub, Codespaces, SQLite e WhiteNoise.</p>
+        {% for tipo in tipos_tecnologia %}
+        <section>
+            <h4>{{ tipo.nome }}</h4>
+            <ul>
+                {% for tecnologia in tipo.tecnologias.all %}
+                    <li>{{ tecnologia.nome }}</li>
+                {% empty %}
+                    <li>Sem tecnologias associadas</li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% empty %}
+        <p>As tecnologias ainda estão a ser registadas.</p>
+        {% endfor %}
+    </article>
+
+    <article>
+        <header>
+            <h3>Estrutura das Páginas</h3>
+        </header>
+        <p>O site está organizado em páginas de consulta, páginas de CRUD e uma secção de documentação técnica e making-of.</p>
+        <ul>
+            <li>Sobre</li>
+            <li>Cursos e unidades curriculares</li>
+            <li>Projetos, tecnologias, competências e formações</li>
+            <li>Making Of</li>
+        </ul>
+    </article>
+
+    <article>
+        <header>
+            <h3>Repositório GitHub</h3>
+        </header>
+        <p><a href="{{ github_repo_url }}">{{ github_repo_url }}</a></p>
+        <p>O GitHub é usado para versionamento, colaboração, histórico de alterações e submissão das iterações do trabalho.</p>
+    </article>
+
+    <article>
+        <header>
+            <h3>Making Of em progresso</h3>
+        </header>
+        <p>Registos recentes:</p>
+        <ul>
+            {% for entrada in making_of_entradas|slice:":3" %}
+                <li>{{ entrada.data }} - {{ entrada.titulo }} ({{ entrada.commit_hash }})</li>
+            {% empty %}
+                <li>Sem entradas registadas.</li>
+            {% endfor %}
+        </ul>
+    </article>
+</section>
+{% endblock %}

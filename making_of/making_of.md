@@ -119,6 +119,24 @@ Exemplos de ficheiros esperados:
 - Foi criado o comando `import_lusofona_course` para carregar o curso e as UC usando o ORM do Django.
 - A modelação foi alargada com atributos adicionais para refletir melhor os dados reais devolvidos pela API.
 
+## Feedback e Iterações
+
+- O professor sugeriu que a aplicação tivesse páginas de consulta mais completas e uma secção dedicada à documentação técnica.
+- Em resposta, foram adicionadas as páginas de `Sobre esta Aplicação`, `Making Of`, `Projetos`, `Tecnologias`, `Competências` e `Formações`.
+- Também foram preparadas rotas CRUD para gerir os dados do portfolio através de formulários.
+
+## Registo de Commits
+
+- `ddffe5f` - Configuração inicial do admin e scaffolding das apps.
+- `944daaa` - Importação dos dados da Lusófona para o portfolio.
+- `bd671d6` - Adição das páginas de consulta da escola e do portfolio.
+
+## Indicador de Iterações
+
+- Iteração 1: estrutura inicial do projeto e primeiras listagens.
+- Iteração 2: importação de dados e enriquecimento da modelação.
+- Iteração 3: páginas de apoio, documentação e CRUD do portfolio.
+
 ## Anexos
 
 - Inserir aqui as imagens do DER, esquemas intermédios e apontamentos relevantes.

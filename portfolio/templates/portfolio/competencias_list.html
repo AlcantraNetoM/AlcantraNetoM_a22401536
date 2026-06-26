@@ -1,0 +1,22 @@
+{% extends "portfolio/base.html" %}
+
+{% block content %}
+<h2>Competências</h2>
+<p><a href="{% url 'portfolio-competencia-nova' %}">Nova competência</a></p>
+
+<section>
+    {% for competencia in competencias %}
+    <article>
+        <header>
+            <h3>{{ competencia.nome }}</h3>
+        </header>
+        <section>
+            <p>{{ competencia.descricao }}</p>
+            <p><a href="{% url 'portfolio-competencia-editar' competencia.pk %}">Editar</a> | <a href="{% url 'portfolio-competencia-apagar' competencia.pk %}">Apagar</a></p>
+        </section>
+    </article>
+    {% empty %}
+        <p>Sem competências registadas.</p>
+    {% endfor %}
+</section>
+{% endblock %}
