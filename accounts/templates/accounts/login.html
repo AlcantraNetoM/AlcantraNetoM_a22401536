@@ -1,0 +1,25 @@
+{% extends "portfolio/base.html" %}
+
+{% block content %}
+<h2>Login</h2>
+
+<section>
+    <article>
+        <header><h3>Entrar com username e password</h3></header>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Entrar</button>
+        </form>
+    </article>
+
+    <article>
+        <header><h3>Magic link</h3></header>
+        <form method="post">
+            {% csrf_token %}
+            {{ magic_form.as_p }}
+            <button type="submit" name="magic-link" value="1">Enviar link mágico</button>
+        </form>
+    </article>
+</section>
+{% endblock %}

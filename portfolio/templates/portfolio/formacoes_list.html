@@ -1,8 +1,11 @@
 {% extends "portfolio/base.html" %}
+{% load portfolio_tags %}
 
 {% block content %}
 <h2>Formações</h2>
+{% if user|has_group:"gestor-portfolio" %}
 <p><a href="{% url 'portfolio-formacao-nova' %}">Nova formação</a></p>
+{% endif %}
 
 <section>
     {% for formacao in formacoes %}
@@ -13,7 +16,9 @@
         </header>
         <section>
             <p>{{ formacao.descricao }}</p>
-            <p><a href="{% url 'portfolio-formacao-editar' formacao.pk %}">Editar</a> | <a href="{% url 'portfolio-formacao-apagar' formacao.pk %}">Apagar</a></p>
+            {% if user|has_group:"gestor-portfolio" %}
+                <p><a href="{% url 'portfolio-formacao-editar' formacao.pk %}">Editar</a> | <a href="{% url 'portfolio-formacao-apagar' formacao.pk %}">Apagar</a></p>
+            {% endif %}
         </section>
     </article>
     {% empty %}

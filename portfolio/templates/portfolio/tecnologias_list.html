@@ -1,8 +1,11 @@
 {% extends "portfolio/base.html" %}
+{% load portfolio_tags %}
 
 {% block content %}
 <h2>Tecnologias</h2>
+{% if user|has_group:"gestor-portfolio" %}
 <p><a href="{% url 'portfolio-tecnologia-nova' %}">Nova tecnologia</a></p>
+{% endif %}
 
 <section>
     {% for tecnologia in tecnologias %}
@@ -13,7 +16,9 @@
         </header>
         <section>
             <p>{{ tecnologia.descricao }}</p>
-            <p><a href="{% url 'portfolio-tecnologia-editar' tecnologia.pk %}">Editar</a> | <a href="{% url 'portfolio-tecnologia-apagar' tecnologia.pk %}">Apagar</a></p>
+            {% if user|has_group:"gestor-portfolio" %}
+                <p><a href="{% url 'portfolio-tecnologia-editar' tecnologia.pk %}">Editar</a> | <a href="{% url 'portfolio-tecnologia-apagar' tecnologia.pk %}">Apagar</a></p>
+            {% endif %}
         </section>
     </article>
     {% empty %}

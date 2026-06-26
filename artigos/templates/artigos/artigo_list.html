@@ -1,0 +1,33 @@
+{% extends "portfolio/base.html" %}
+{% load portfolio_tags %}
+
+{% block content %}
+<h2>Artigos</h2>
+
+{% if user|has_group:"autores" %}
+<p><a href="{% url 'artigos-create' %}">Novo artigo</a></p>
+{% endif %}
+
+<section>
+    {% for artigo in artigos %}
+    <article>
+        <header>
+            <h3><a href="{% url 'artigos-detail' artigo.pk %}">Artigo {{ artigo.pk }}</a></h3>
+            <p>Autor: {{ artigo.autor.username }} | {{ artigo.data_criacao }}</p>
+        </header>
+        <section>
+            <p>{{ artigo.texto|truncatechars:200 }}</p>
+            <p>Likes: {{ artigo.likes.count }} | Comentários: {{ artigo.comentarios.count }}</p>
+            {% if user|has_group:"autores" and artigo.autor == user %}
+                <p>
+                    <a href="{% url 'artigos-update' artigo.pk %}">Editar</a>
+                    <a href="{% url 'artigos-delete' artigo.pk %}">Apagar</a>
+                </p>
+            {% endif %}
+        </section>
+    </article>
+    {% empty %}
+        <p>Sem artigos registados.</p>
+    {% endfor %}
+</section>
+{% endblock %}

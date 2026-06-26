@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     "pessoas",
     "portfolio",
     "escola",
+    "accounts.apps.AccountsConfig",
+    "artigos.apps.ArtigosConfig",
 ]
 
 MIDDLEWARE = [
@@ -122,3 +124,7 @@ STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = "webmaster@localhost"
+LOGIN_REDIRECT_URL = "/portfolio/"
+LOGOUT_REDIRECT_URL = "/accounts/login/"

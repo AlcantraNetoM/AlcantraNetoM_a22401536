@@ -1,8 +1,11 @@
 {% extends "portfolio/base.html" %}
+{% load portfolio_tags %}
 
 {% block content %}
 <h2>Competências</h2>
+{% if user|has_group:"gestor-portfolio" %}
 <p><a href="{% url 'portfolio-competencia-nova' %}">Nova competência</a></p>
+{% endif %}
 
 <section>
     {% for competencia in competencias %}
@@ -12,7 +15,9 @@
         </header>
         <section>
             <p>{{ competencia.descricao }}</p>
-            <p><a href="{% url 'portfolio-competencia-editar' competencia.pk %}">Editar</a> | <a href="{% url 'portfolio-competencia-apagar' competencia.pk %}">Apagar</a></p>
+            {% if user|has_group:"gestor-portfolio" %}
+                <p><a href="{% url 'portfolio-competencia-editar' competencia.pk %}">Editar</a> | <a href="{% url 'portfolio-competencia-apagar' competencia.pk %}">Apagar</a></p>
+            {% endif %}
         </section>
     </article>
     {% empty %}

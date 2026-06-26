@@ -1,0 +1,61 @@
+{% extends "portfolio/base.html" %}
+{% load portfolio_tags %}
+
+{% block content %}
+<article>
+    <header>
+        <h2>Artigo {{ artigo.pk }}</h2>
+        <p>Autor: {{ artigo.autor.username }} | {{ artigo.data_criacao }}</p>
+    </header>
+
+    <section>
+        <p>{{ artigo.texto }}</p>
+        {% if artigo.fotografia %}
+            <img src="{{ artigo.fotografia.url }}" alt="Fotografia do artigo">
+        {% endif %}
+        {% if artigo.link_externo %}
+            <p><a href="{{ artigo.link_externo }}" target="_blank" rel="noopener">Link externo</a></p>
+        {% endif %}
+    </section>
+
+    <section>
+        <form action="{% url 'artigos-like' artigo.pk %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Gostar ({{ artigo.likes.count }})</button>
+        </form>
+    </section>
+
+    {% if user|has_group:"autores" and artigo.autor == user %}
+        <p>
+            <a href="{% url 'artigos-update' artigo.pk %}">Editar</a>
+            <a href="{% url 'artigos-delete' artigo.pk %}">Apagar</a>
+        </p>
+    {% endif %}
+</article>
+
+<section>
+    <h3>Comentários</h3>
+    {% for comentario in artigo.comentarios.all %}
+        <article>
+            <header>
+                <h4>{{ comentario.utilizador.username }}</h4>
+                <p>{{ comentario.data_criacao }}</p>
+            </header>
+            <p>{{ comentario.texto }}</p>
+        </article>
+    {% empty %}
+        <p>Sem comentários.</p>
+    {% endfor %}
+</section>
+
+{% if user.is_authenticated %}
+<section>
+    <h3>Adicionar comentário</h3>
+    <form action="{% url 'artigos-comment' artigo.pk %}" method="post">
+        {% csrf_token %}
+        {{ comentario_form.as_p }}
+        <button type="submit">Publicar</button>
+    </form>
+</section>
+{% endif %}
+{% endblock %}

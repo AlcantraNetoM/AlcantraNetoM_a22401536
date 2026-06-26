@@ -1,8 +1,11 @@
 {% extends "portfolio/base.html" %}
+{% load portfolio_tags %}
 
 {% block content %}
 <h2>Projetos</h2>
+{% if user|has_group:"gestor-portfolio" %}
 <p><a href="{% url 'portfolio-projeto-novo' %}">Novo projeto</a></p>
+{% endif %}
 
 <section>
     {% for projeto in projetos %}
@@ -13,7 +16,9 @@
         </header>
         <section>
             <p>{{ projeto.descricao }}</p>
-            <p><a href="{% url 'portfolio-projeto-editar' projeto.pk %}">Editar</a> | <a href="{% url 'portfolio-projeto-apagar' projeto.pk %}">Apagar</a></p>
+            {% if user|has_group:"gestor-portfolio" %}
+                <p><a href="{% url 'portfolio-projeto-editar' projeto.pk %}">Editar</a> | <a href="{% url 'portfolio-projeto-apagar' projeto.pk %}">Apagar</a></p>
+            {% endif %}
         </section>
     </article>
     {% empty %}
